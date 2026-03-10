@@ -1,7 +1,7 @@
-# TradingView Quantitative Investment Analysis Skill
+# TradingView Quantitative Investment Analysis Skill for OpenClaw
 
-[![Install with skills](https://img.shields.io/badge/install-skills-blue)](https://skills.sh/hypier/tradingview-quantitative-skills/tradingview-quantitative)
-[![GitHub](https://img.shields.io/github/stars/hypier/tradingview-quantitative-skills?style=social)](https://github.com/hypier/tradingview-quantitative-skills)
+[![Install with skills](https://img.shields.io/badge/install-skills-blue)](https://skills.sh/ljsd666/openclaw-tradingview-quant/openclaw-tradingview-quant)
+[![GitHub](https://img.shields.io/github/stars/ljsd666/openclaw-tradingview-quant?style=social)](https://github.com/ljsd666/openclaw-tradingview-quant)
 
 Professional quantitative investment analysis guidance system based on TradingView API data structures, providing intelligent stock screening, technical pattern recognition, market review, risk management, and event-driven analysis frameworks and methodologies.
 
@@ -17,7 +17,7 @@ Professional quantitative investment analysis guidance system based on TradingVi
 Install this skill with one command:
 
 ```bash
-npx skills add hypier/tradingview-quantitative-skills
+npx skills add ljsd666/openclaw-tradingview-quant
 ```
 
 ## Features
@@ -36,7 +36,7 @@ npx skills add hypier/tradingview-quantitative-skills
 ### 1. Install the Skill
 
 ```bash
-npx skills add hypier/tradingview-quantitative-skills
+npx skills add ljsd666/openclaw-tradingview-quant
 ```
 
 ### 2. Start Using
@@ -146,8 +146,8 @@ For complete market list and data structures, see `references/api-documentation.
 ## Directory Structure
 
 ```
-tradingview-quantitative/
-├── README.md                    # English user guideß
+openclaw-tradingview-quant/
+├── README.md                    # English user guide
 ├── SKILL.md                     # AI skill description
 ├── SECURITY.md                  # Security policy and best practices
 ├── references/                  # Reference materials

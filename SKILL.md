@@ -1,26 +1,25 @@
 ---
-name: tradingview-quantitative
+name: openclaw-tradingview-quant
 description: >
-  Professional quantitative investment analysis methodology and frameworks.
+  Guides AI to call TradingView API and perform professional quantitative investment analysis.
   Use when users ask about stock analysis, technical indicators, market screening, risk management,
-  or trading strategies. Provides analysis guidance based on TradingView API data structures.
-  Compatible with OpenClaw and other AI agent frameworks.
+  or trading strategies. Provides API calling patterns and analysis methodologies based on real data.
 ---
 
 # Quantitative Investment Analysis Expert
 
-Professional quantitative investment analysis system designed for OpenClaw integration, providing insights and decision recommendations based on TradingView API data structures.
+This skill guides AI agents to call TradingView API, fetch market data, and perform professional quantitative investment analysis using OpenClaw integration.
 
 ## Core Rules
 
-### Analysis Based on API Example Data
+### Analysis Based on API Calls
 
-This skill provides quantitative investment analysis guidance based on TradingView API example data, designed for integration with OpenClaw. All analysis and recommendations are derived from understanding API data structures and applying professional investment methodologies.
+This skill guides AI to call TradingView API endpoints, fetch real market data, and perform quantitative analysis. All analysis is based on actual API responses and professional investment methodologies.
 
 **Data Sources:**
-- API examples in `references/api-examples/` directory demonstrate real API request/response formats (curl examples)
-- Complete API documentation in `references/api-documentation.md`
-- Professional analysis methodologies in `references/` directory
+- API examples in `references/api-examples/` directory show how to call each endpoint (curl examples with request/response)
+- Complete API documentation in `references/api-documentation.md` lists all available endpoints and parameters
+- Professional analysis methodologies in `references/` directory guide how to interpret and analyze the data
 
 ### Security and Content Safety
 
@@ -93,14 +92,16 @@ This skill provides quantitative investment analysis guidance based on TradingVi
 
 ## How to Use This Skill
 
-1. **Understand API Data Structures**: Review examples in `references/api-examples/` to understand available data fields
-2. **Apply Analysis Frameworks**: Use workflows in `workflows/` directory for structured analysis approaches
-3. **Reference Methodologies**: Consult `references/` for professional investment analysis techniques
-4. **Provide Guidance**: Offer analysis recommendations based on data structures and methodologies
+**For AI Agents:**
+1. **Learn API Calling Patterns**: Study examples in `references/api-examples/` to understand how to construct API requests
+2. **Fetch Real Data**: Use OpenClaw's tool integration to call TradingView API endpoints and retrieve market data
+3. **Apply Analysis Frameworks**: Use workflows in `workflows/` directory to analyze the fetched data
+4. **Generate Insights**: Combine data analysis with methodologies in `references/` to provide investment recommendations
 
-**Integration with OpenClaw**: This skill is designed to work with OpenClaw AI agent framework:
-- Use OpenClaw's tool integration to connect TradingView API
-- Reference: `references/api-documentation.md` for API endpoints and parameters
+**Integration with OpenClaw**:
+- Configure OpenClaw to connect to TradingView API (see `references/api-documentation.md` for endpoints)
+- AI agents can call APIs through OpenClaw's tool system to fetch real-time market data
+- Use the fetched data with analysis frameworks to generate actionable insights
 - OpenClaw Documentation: https://openclaw.ai
 - TradingView API: https://rapidapi.com/hypier/api/tradingview-data1
 
