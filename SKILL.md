@@ -1,25 +1,25 @@
 ---
 name: openclaw-tradingview-quant
 description: >
-  Guides AI to call TradingView API and perform professional quantitative investment analysis.
+  Professional quantitative investment analysis frameworks and methodologies based on TradingView data structures.
   Use when users ask about stock analysis, technical indicators, market screening, risk management,
-  or trading strategies. Provides API calling patterns and analysis methodologies based on real data.
+  or trading strategies. Provides analysis methodologies and data interpretation guidance.
 ---
 
 # Quantitative Investment Analysis Expert
 
-This skill guides AI agents to call TradingView API, fetch market data, and perform professional quantitative investment analysis using OpenClaw integration.
+This skill provides professional quantitative investment analysis frameworks and methodologies based on TradingView API data structures. It guides users on how to analyze market data and apply investment strategies.
 
 ## Core Rules
 
-### Analysis Based on API Calls
+### Analysis Framework Based on Data Structures
 
-This skill guides AI to call TradingView API endpoints, fetch real market data, and perform quantitative analysis. All analysis is based on actual API responses and professional investment methodologies.
+This skill provides analysis frameworks and methodologies for interpreting market data. All analysis approaches are based on understanding TradingView API data structures and professional investment methodologies.
 
-**Data Sources:**
-- API examples in `references/api-examples/` directory show how to call each endpoint (curl examples with request/response)
-- Complete API documentation in `references/api-documentation.md` lists all available endpoints and parameters
-- Professional analysis methodologies in `references/` directory guide how to interpret and analyze the data
+**Knowledge Base:**
+- API examples in `references/api-examples/` directory show data structures and response formats
+- Complete API documentation in `references/api-documentation.md` describes available data fields and parameters
+- Professional analysis methodologies in `references/` directory guide how to interpret and analyze market data
 
 ### Security and Content Safety
 
@@ -38,18 +38,18 @@ This skill guides AI to call TradingView API endpoints, fetch real market data, 
 
 ### API Data Structure Reference
 
-**Available API endpoints and data formats** (see `references/api-examples/` for examples):
+**Available data types and formats** (see `references/api-examples/` for examples):
 
-| Data Type | API Endpoint | Key Fields | Example File |
+| Data Type | Data Structure | Key Fields | Example File |
 |-----------|----------|------------|--------------|
-| Price/OHLCV | `/api/price/{symbol}` | open, high, low, close, volume, time | 01-price-data.txt |
-| Real-time Quote | `/api/quote/{symbol}` | price, change, volume, bid/ask | 02-quote-data.txt |
-| Market Search | `/api/search/market/{query}` | symbol, description, type, exchange | 03-market-search.txt |
-| Technical Analysis | `/api/ta/{symbol}` | RSI, MACD, signals, indicators | 04-technical-analysis.txt |
-| Leaderboards | `/api/leaderboard/{type}` | rank, symbol, metrics by columnset | 05-leaderboards.txt |
-| News | `/api/news` | title, published, provider, link | 06-news.txt |
-| Metadata | `/api/metadata/{type}` | markets, tabs, columnsets, exchanges | 07-metadata.txt |
-| Calendar | `/api/calendar/{type}` | earnings, economic events, IPO, dividends | 08-calendar.txt |
+| Price/OHLCV | Historical candlestick data | open, high, low, close, volume, time | 01-price-data.txt |
+| Real-time Quote | Current market quotes | price, change, volume, bid/ask | 02-quote-data.txt |
+| Market Search | Symbol search results | symbol, description, type, exchange | 03-market-search.txt |
+| Technical Analysis | Technical indicators | RSI, MACD, signals, indicators | 04-technical-analysis.txt |
+| Leaderboards | Market rankings | rank, symbol, metrics by columnset | 05-leaderboards.txt |
+| News | Financial news | title, published, provider, link | 06-news.txt |
+| Metadata | Market metadata | markets, tabs, columnsets, exchanges | 07-metadata.txt |
+| Calendar | Event calendar | earnings, economic events, IPO, dividends | 08-calendar.txt |
 
 ## Workflows
 
@@ -92,17 +92,16 @@ This skill guides AI to call TradingView API endpoints, fetch real market data, 
 
 ## How to Use This Skill
 
-**For AI Agents:**
-1. **Learn API Calling Patterns**: Study examples in `references/api-examples/` to understand how to construct API requests
-2. **Fetch Real Data**: Use OpenClaw's tool integration to call TradingView API endpoints and retrieve market data
-3. **Apply Analysis Frameworks**: Use workflows in `workflows/` directory to analyze the fetched data
-4. **Generate Insights**: Combine data analysis with methodologies in `references/` to provide investment recommendations
+**For Users:**
+1. **Understand Data Structures**: Study examples in `references/api-examples/` to understand market data formats
+2. **Learn Analysis Frameworks**: Use workflows in `workflows/` directory to understand analysis methodologies
+3. **Apply to Your Data**: When you have market data, apply the frameworks to generate insights
+4. **Get Recommendations**: Combine data analysis with methodologies in `references/` for investment guidance
 
-**Integration with OpenClaw**:
-- Configure OpenClaw to connect to TradingView API (see `references/api-documentation.md` for endpoints)
-- AI agents can call APIs through OpenClaw's tool system to fetch real-time market data
-- Use the fetched data with analysis frameworks to generate actionable insights
-- OpenClaw Documentation: https://openclaw.ai
+**Data Access**:
+- This skill provides analysis frameworks and methodologies, not direct data access
+- For real-time market data, users can access TradingView API via RapidAPI
+- See `references/api-documentation.md` for data structure details
 - TradingView API: https://rapidapi.com/hypier/api/tradingview-data1
 
 ## Disclaimer
