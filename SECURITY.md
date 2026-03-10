@@ -63,39 +63,23 @@ If you discover a security vulnerability in this skill, please report it by:
 
 ### Configuration File Security
 
-When configuring the MCP server, ensure your configuration file is secure:
+When integrating with OpenClaw, ensure your configuration files are secure:
 
 ```bash
 # Set appropriate file permissions (Unix/Linux/macOS)
-chmod 600 ~/Library/Application\ Support/Cursor/mcp_config.json
+chmod 600 ~/.openclaw/config.json
 ```
 
-### Using Environment Variables (Advanced)
+### Using Environment Variables (Recommended)
 
-For enhanced security, consider using environment variables instead of hardcoded keys:
+For enhanced security, use environment variables instead of hardcoded keys:
 
-```json
-{
-  "mcpServers": {
-    "RapidAPI Hub - TradingView Data": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://mcp.rapidapi.com",
-        "--header",
-        "x-api-host: tradingview-data1.p.rapidapi.com",
-        "--header",
-        "x-api-key: ${RAPIDAPI_KEY}"
-      ]
-    }
-  }
-}
-```
-
-Then set the environment variable:
 ```bash
+# Set API key as environment variable
 export RAPIDAPI_KEY="your-actual-key-here"
 ```
+
+Then reference it in your OpenClaw tool configuration or API calls.
 
 ### Monitoring API Usage
 

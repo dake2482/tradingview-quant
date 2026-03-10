@@ -1,6 +1,6 @@
 # TradingView Data API
 
-Access real-time market data from TradingView with our comprehensive REST API, WebSocket support, and Model Context Protocol (MCP) integration. Get stock quotes, candlestick data, technical analysis, market leaderboards, and financial news for stocks, crypto, forex, futures, bonds, and ETFs. Includes WebSocket support for live data streaming with real-time price updates and quotes, and MCP support for AI assistant integration.
+Access real-time market data from TradingView with our comprehensive REST API and WebSocket support. Get stock quotes, candlestick data, technical analysis, market leaderboards, and financial news for stocks, crypto, forex, futures, bonds, and ETFs. Includes WebSocket support for live data streaming with real-time price updates and quotes.
 
 ## Available Endpoints
 
@@ -182,11 +182,6 @@ Get TradingView logo images. The logo path should be obtained from currency-logo
 | **Cryptocurrencies** | `crypto/XTVCBTC`, `crypto/XTVCETH`, `crypto/XTVCSOL`, `crypto/XTVCDOGE`, `crypto/XTVCADA`, `crypto/XTVCDOT`, `crypto/XTVCLINK`, `crypto/XTVCMATIC`, `crypto/XTVCAVAX`, `crypto/XTVCLUNA` |
 | **Stock Companies** | `apple`, `microsoft`, `alphabet`, `tesla`, `amazon`, `meta-platforms`, `nvidia`, `jpmorgan-chase`, `visa`, `johnson-and-johnson`, `berkshire-hathaway`, `unitedhealth-group`, `mastercard`, `home-depot`, `bank-of-america` |
 | **Countries/Regions** | `country/EU`, `country/US`, `country/GB`, `country/JP`, `country/CN`, `country/CA`, `country/AU`, `country/DE`, `country/FR`, `country/IN`, `country/KR`, `country/SG`, `country/HK`, `country/CH`, `country/NL` |
-
-### 🤖 Model Context Protocol (MCP)
-Access TradingView data through the Model Context Protocol, enabling AI assistants (like Claude, Cursor) to interact with TradingView tools using a standardized protocol.
-
-**Note:** This section describes the API structure for reference. The actual MCP server endpoints shown use example domains for documentation purposes.
 
 ### ⚡ WebSocket Real-time Data
 WebSocket endpoint for real-time price updates, quotes, and market data streaming.

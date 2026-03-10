@@ -1,6 +1,6 @@
-# MCP Tools Usage Guide
+# API Tools Usage Guide
 
-> Metadata-first rules, tool combination patterns, best practices for various scenarios
+> Metadata-first rules, API combination patterns, best practices for various scenarios
 
 ---
 
@@ -169,7 +169,7 @@ const twoWeeksLater = now + 14 * 24 * 60 * 60;
 
 ## Multi-Asset Type Support
 
-MCP supports 8 asset types, each with different tabs and columnsets:
+The API supports 8 asset types, each with different tabs and columnsets:
 
 | Asset Type | asset_type | Tabs Count | Columnsets | Requires market_code |
 |------------|-----------|------------|------------|-------------------|

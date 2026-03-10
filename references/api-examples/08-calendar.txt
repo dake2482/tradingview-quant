@@ -1,7 +1,7 @@
 curl --request GET \
 	--url 'https://tradingview-data1.p.rapidapi.com/api/calendar/economic?from=1769356800&to=1769961599&market=america' \
 	--header 'x-rapidapi-host: tradingview-data1.p.rapidapi.com' \
-	--header 'x-rapidapi-key: bda8badcf0msh3aaa33df32f7ae3p195936jsnbb7a76e2'
+	--header 'x-rapidapi-key: YOUR_RAPIDAPI_KEY'
 
   {
   "success": true,

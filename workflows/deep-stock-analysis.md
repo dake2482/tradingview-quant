@@ -4,7 +4,7 @@ description: Deep Stock Analysis Workflow - Comprehensive analysis of individual
 
 # Deep Stock Analysis Workflow
 
-Combine multiple MCP tools to perform comprehensive analysis on individual stocks, outputting integrated reports and trading recommendations.
+Combine multiple API data sources to perform comprehensive analysis on individual stocks, outputting integrated reports and trading recommendations.
 
 ## Execution Steps
 

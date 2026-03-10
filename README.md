@@ -1,7 +1,5 @@
 # TradingView Quantitative Investment Analysis Skill
 
-[English](README.md) | [简体中文](README.zh.md)
-
 [![Install with skills](https://img.shields.io/badge/install-skills-blue)](https://skills.sh/hypier/tradingview-quantitative-skills/tradingview-quantitative)
 [![GitHub](https://img.shields.io/github/stars/hypier/tradingview-quantitative-skills?style=social)](https://github.com/hypier/tradingview-quantitative-skills)
 
@@ -149,8 +147,7 @@ For complete market list and data structures, see `references/api-documentation.
 
 ```
 tradingview-quantitative/
-├── README.md                    # English user guide
-├── README.zh.md                 # Chinese user guide
+├── README.md                    # English user guideß
 ├── SKILL.md                     # AI skill description
 ├── SECURITY.md                  # Security policy and best practices
 ├── references/                  # Reference materials

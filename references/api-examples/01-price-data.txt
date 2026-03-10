@@ -1,7 +1,7 @@
 curl --request GET \
 	--url 'https://tradingview-data1.p.rapidapi.com/api/price/BINANCE:BTCUSDT?timeframe=1&range=10' \
 	--header 'x-rapidapi-host: tradingview-data1.p.rapidapi.com' \
-	--header 'x-rapidapi-key: bda8badcf0msh3aaa33df32f7ae3p195936jsnbb7a76e2'
+	--header 'x-rapidapi-key: YOUR_RAPIDAPI_KEY'
 {
   "success": true,
   "data": {
@@ -177,7 +177,7 @@ curl --request POST \
 	--url https://tradingview-data1.p.rapidapi.com/api/price/batch \
 	--header 'Content-Type: application/json' \
 	--header 'x-rapidapi-host: tradingview-data1.p.rapidapi.com' \
-	--header 'x-rapidapi-key: bda8badcf0msh3aaa33df32f7ae3p195936jsnbb7a76e2' \
+	--header 'x-rapidapi-key: YOUR_RAPIDAPI_KEY' \
 	--data '{"requests":[{"symbol":"BINANCE:BTCUSDT","timeframe":"60","range":20},{"symbol":"BINANCE:ETHUSDT","timeframe":"60","range":20},{"symbol":"NASDAQ:AAPL","timeframe":"D","range":10}]}'
 
 

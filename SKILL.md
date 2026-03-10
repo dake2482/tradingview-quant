@@ -1,57 +1,24 @@
 ---
 name: tradingview-quantitative
 description: >
-  Professional quantitative investment analysis system based on TradingView data.
-  Provides intelligent stock screening, technical pattern recognition, market review,
-  risk management, and event-driven analysis with multi-factor scoring and trading strategies.
+  Professional quantitative investment analysis methodology and frameworks.
+  Use when users ask about stock analysis, technical indicators, market screening, risk management,
+  or trading strategies. Provides analysis guidance based on TradingView API data structures.
+  Compatible with OpenClaw and other AI agent frameworks.
 ---
 
 # Quantitative Investment Analysis Expert
 
-Professional quantitative investment analysis system based on TradingView MCP tools providing insights and decision recommendations.
+Professional quantitative investment analysis system designed for OpenClaw integration, providing insights and decision recommendations based on TradingView API data structures.
 
 ## Core Rules
 
-### Brainstorming Before Analysis
+### Analysis Based on API Example Data
 
-**CRITICAL: Before performing any analysis, you MUST brainstorm with the user to understand their true intent.**
-
-When a user requests quantitative analysis, follow this process:
-
-1. **Understand the Goal**: What is the user trying to achieve?
-   - Investment decision (buy/sell/hold)?
-   - Risk assessment?
-   - Market opportunity discovery?
-   - Portfolio optimization?
-   - Learning and research?
-
-2. **Clarify the Scope**: What specific aspects matter most?
-   - Time horizon (day trading, swing trading, long-term investing)?
-   - Risk tolerance (conservative, moderate, aggressive)?
-   - Market focus (specific sectors, regions, market cap)?
-   - Analysis depth (quick screening vs. deep analysis)?
-
-3. **Identify Constraints**: What limitations exist?
-   - Budget constraints?
-   - Time constraints?
-   - Data availability?
-   - Regulatory considerations?
-
-4. **Propose Approach**: Based on understanding, suggest:
-   - Which workflows to use (screening, deep analysis, pattern recognition, etc.)
-   - What data to fetch (price, technical indicators, news, calendar events)
-   - What analysis frameworks to apply
-   - Expected output format
-
-5. **Confirm Direction**: Get user agreement before proceeding with data fetching and analysis
-
-**Example Brainstorming Flow:**
-
-```
-User: "帮我分析一下茅台"
+This skill provides quantitative investment analysis guidance based on TradingView API example data, designed for integration with OpenClaw. All analysis and recommendations are derived from understanding API data structures and applying professional investment methodologies.
 
 **Data Sources:**
-- API examples in `references/api-examples/` directory demonstrate real API request/response formats
+- API examples in `references/api-examples/` directory demonstrate real API request/response formats (curl examples)
 - Complete API documentation in `references/api-documentation.md`
 - Professional analysis methodologies in `references/` directory
 
@@ -74,7 +41,7 @@ User: "帮我分析一下茅台"
 
 **Available API endpoints and data formats** (see `references/api-examples/` for examples):
 
-| Data Type | Endpoint | Key Fields | Example File |
+| Data Type | API Endpoint | Key Fields | Example File |
 |-----------|----------|------------|--------------|
 | Price/OHLCV | `/api/price/{symbol}` | open, high, low, close, volume, time | 01-price-data.txt |
 | Real-time Quote | `/api/quote/{symbol}` | price, change, volume, bid/ask | 02-quote-data.txt |
@@ -118,7 +85,7 @@ User: "帮我分析一下茅台"
 
 - **`api-examples/`** - Real API request/response examples (9 files covering all endpoint types: price, quote, search, technical analysis, leaderboards, news, metadata, calendar, logo)
 - **`api-documentation.md`** - Complete TradingView API documentation (endpoints, parameters, metadata dictionary: market codes/tabs/columnsets/exchanges)
-- **`mcp-tools-guide.md`** - API data structure guide (data combination patterns, best practices for various scenarios)
+- **`api-tools-guide.md`** - API data structure guide (data combination patterns, best practices for various scenarios)
 - **`technical-analysis.md`** - Technical analysis methodology (comprehensive scoring model, trend/momentum/pattern/support-resistance scoring)
 - **`pattern-library.md`** - Pattern recognition library (classic patterns, recognition algorithms, success rate statistics)
 - **`risk-management.md`** - Risk management system (position management, stop-loss strategies, portfolio management)
@@ -131,9 +98,11 @@ User: "帮我分析一下茅台"
 3. **Reference Methodologies**: Consult `references/` for professional investment analysis techniques
 4. **Provide Guidance**: Offer analysis recommendations based on data structures and methodologies
 
-**Note**: This skill provides analysis guidance and frameworks. For real-time data access, users can obtain API keys from:
-- RapidAPI: https://rapidapi.com/hypier/api/tradingview-data1
-- Documentation: https://www.tradingviewapi.com
+**Integration with OpenClaw**: This skill is designed to work with OpenClaw AI agent framework:
+- Use OpenClaw's tool integration to connect TradingView API
+- Reference: `references/api-documentation.md` for API endpoints and parameters
+- OpenClaw Documentation: https://openclaw.ai
+- TradingView API: https://rapidapi.com/hypier/api/tradingview-data1
 
 ## Disclaimer
 

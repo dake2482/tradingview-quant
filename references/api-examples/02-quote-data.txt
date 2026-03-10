@@ -2,7 +2,7 @@ curl --request POST \
 	--url https://tradingview-data1.p.rapidapi.com/api/quote/batch \
 	--header 'Content-Type: application/json' \
 	--header 'x-rapidapi-host: tradingview-data1.p.rapidapi.com' \
-	--header 'x-rapidapi-key: bda8badcf0msh3aaa33df32f7ae3p195936jsnbb7a76e2' \
+	--header 'x-rapidapi-key: YOUR_RAPIDAPI_KEY' \
 	--data '{"symbols":["BINANCE:BTCUSDT","BINANCE:ETHUSDT","NASDAQ:AAPL"],"session":"regular","fields":"all"}'
 
   {
@@ -179,7 +179,7 @@ curl --request POST \
 curl --request GET \
 	--url 'https://tradingview-data1.p.rapidapi.com/api/quote/BINANCE:BTCUSDT?session=regular&fields=all' \
 	--header 'x-rapidapi-host: tradingview-data1.p.rapidapi.com' \
-	--header 'x-rapidapi-key: bda8badcf0msh3aaa33df32f7ae3p195936jsnbb7a76e2'
+	--header 'x-rapidapi-key: YOUR_RAPIDAPI_KEY'
 
   {
   "success": true,
