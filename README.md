@@ -210,8 +210,7 @@ Combining historical K-line data and technical indicators, methodology guidance 
 To access real-time market data, you can:
 
 1. **Visit RapidAPI**: https://rapidapi.com/hypier/api/tradingview-data1
-2. **Check API Documentation**: https://www.tradingviewapi.com
-3. **Refer to Examples**: Real API calling examples in `references/api-examples/` directory
+2. **Refer to Examples**: Real API calling examples in `references/api-examples/` directory
 
 ## Disclaimer
 

@@ -43,4 +43,3 @@ curl --request GET \
 
 These are example responses for reference. For real-time data access, visit:
 - RapidAPI: https://rapidapi.com/hypier/api/tradingview-data1
-- Documentation: https://www.tradingviewapi.com
