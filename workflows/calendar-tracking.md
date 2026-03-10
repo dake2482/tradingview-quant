@@ -1,48 +1,41 @@
 ---
-description: Calendar Event Tracking Workflow - Track important market events from financial calendars
+description: Calendar Event Analysis Framework - Methodology for tracking and analyzing market calendar events
 ---
 
-# Calendar Event Tracking Workflow
+# Calendar Event Analysis Framework
 
-Track important market events from financial calendars, including earnings releases, dividend distributions, IPO listings, economic data releases, etc.
+This framework provides methodology for analyzing important market events from financial calendars, including earnings releases, dividend distributions, IPO listings, and economic data releases. Users should provide calendar data for analysis.
 
-## Execution Steps
+## Analysis Steps
 
-### Step 1: Determine Calendar Type
+### Step 1: Calendar Type Classification
 
-Determine the calendar type based on user needs:
+Calendar types and their characteristics:
 - **economic**: Economic calendar (GDP, CPI, employment data, etc.)
 - **earnings**: Earnings calendar (company earnings release dates)
 - **revenue**: Dividend calendar (dividend distribution dates)
 - **ipo**: IPO calendar (new stock listing dates)
 
-### Step 2: Determine Time Range
+### Step 2: Time Range Considerations
 
-Calculate the query time range (Unix timestamp):
-- Default query: next 7-14 days
-- User can specify specific date range
-- Note: Time span cannot exceed 40 days
+Time range parameters:
+- Typical query range: next 7-14 days
+- Custom date ranges supported
+- Maximum time span: 40 days
 
-### Step 3: Determine Market Scope
+### Step 3: Market Scope Definition
 
-Select market based on calendar type:
+Market selection by calendar type:
 - Economic calendar: Supports multiple countries (america, china, japan, etc.)
-- Earnings/Dividend/IPO: Default is america, can specify other markets
+- Earnings/Dividend/IPO: Various markets available
 
-### Step 4: Call Calendar Tool
+### Step 4: Calendar Data Structure
 
-Call `tradingview_get_calendar` to retrieve calendar data:
-
-```
-Parameter description:
-- type: Calendar type (required)
-  - economic: Economic events
-  - earnings: Earnings releases
-  - revenue: Dividend distributions
-  - ipo: New stock listings
-- from: Start time (required, Unix timestamp)
-- to: End time (required, Unix timestamp)
-- market: Market code (optional, comma-separated)
+**Required Data Fields**:
+- type: Calendar type (economic/earnings/revenue/ipo)
+- from: Start time (Unix timestamp)
+- to: End time (Unix timestamp)
+- market: Market code (comma-separated for multiple markets)
 ```
 
 ### Step 5: Filter and Sort Events
@@ -60,42 +53,44 @@ Output formatted calendar report:
 - Potential impact analysis
 - Recommended securities to watch
 
-## Example Conversations
+## Example Analysis Scenarios
 
 **User**: "What important earnings are coming next week?"
 
-**Execution**:
-1. Calculate next week's time range (from/to timestamps)
-2. Call `tradingview_get_calendar` with type="earnings"
-3. Return earnings list, highlighting companies with high market attention
-4. Suggest securities that may exceed expectations
+**Analysis Framework**:
+1. Review next week's earnings calendar data
+2. Identify companies with high market attention
+3. Analyze companies that may exceed expectations
+4. Generate earnings preview report
 
 ---
 
 **User**: "Check US economic data releases for the next two weeks"
 
-**Execution**:
-1. Calculate time range for next two weeks
-2. Call `tradingview_get_calendar` with type="economic", market="america"
-3. Return important data release times like CPI, non-farm payrolls, GDP, etc.
-4. Analyze potential market impact of the data
+**Analysis Framework**:
+1. Review economic calendar for next two weeks
+2. Identify important data releases (CPI, non-farm payrolls, GDP, etc.)
+3. Analyze potential market impact of each data point
+4. Generate economic calendar report
 
 ---
 
 **User**: "Check which new stocks are listing this month"
 
-**Execution**:
-1. Calculate time range for this month
-2. Call `tradingview_get_calendar` with type="ipo"
-3. Return new stock list including offering price, listing date, etc.
-4. Analyze industry distribution of new stocks and IPO recommendations
+**Analysis Framework**:
+1. Review IPO calendar for current month
+2. Analyze new stock details (offering price, listing date, etc.)
+3. Assess industry distribution of new stocks
+4. Provide IPO analysis and recommendations
 
 ---
 
 **User**: "Are any of my holdings paying dividends soon?"
 
-**Execution**:
-1. Get user's stock holdings list
-2. Call `tradingview_get_calendar` with type="revenue"
-3. Filter dividend information for user's holdings
-4. Return ex-dividend date, payment date, dividend amount, etc.
+**Analysis Framework**:
+1. Review dividend calendar data
+2. Filter dividend information for user's holdings
+3. Identify ex-dividend dates, payment dates, and amounts
+4. Generate dividend schedule report
+
+**Note**: This framework describes the analytical methodology. Users should provide relevant calendar data for analysis.

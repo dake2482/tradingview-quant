@@ -1,58 +1,52 @@
 ---
-description: Financial News Briefing Workflow - Get and summarize financial news
+description: Financial News Analysis Framework - Methodology for analyzing and summarizing financial news
 ---
 
-# Financial News Briefing Workflow
+# Financial News Analysis Framework
 
-Get financial news for specified countries/regions, analyze impact, and generate structured briefings.
+This framework provides methodology for analyzing financial news, assessing market impact, and generating structured briefings. Users should provide news data for analysis.
 
-## Execution Steps
+## Analysis Steps
 
-### Step 1: Determine Target Market
+### Step 1: Target Market Definition
 
-Common market_country and lang combinations:
+Common market and language combinations:
 
-| Market | market_country | lang |
-|--------|---------------|------|
+| Market | Country Code | Language |
+|--------|--------------|----------|
 | China | CN | zh-Hans |
 | United States | US | en |
 | Japan | JP | ja |
 | Hong Kong | HK | zh-Hans or en |
 | South Korea | KR | ko |
 
-### Step 2: Get News List
+### Step 2: News Data Structure
 
-```
-tradingview_get_news(
-  market_country='CN', lang='zh-Hans', limit=10,
-  market='stock'  # Optional filter: stock/crypto/forex/futures/bond/etf/index/economic
-)
-```
+**News List Data Requirements**:
+- Market filter options: stock/crypto/forex/futures/bond/etf/index/economic
+- Country/region filter
+- Language preference
+- Time range and limit
 
-Can also get by symbol:
-```
-tradingview_get_news(symbol='NASDAQ:AAPL', lang='en', limit=10)
-```
+**Symbol-Specific News**: Can be filtered by specific stock symbols
 
-### Step 3: Get News Details
+### Step 3: News Detail Analysis
 
-Get full content for each news item:
+**Required Data Fields**:
+- Title and description
+- Full content text
+- Related symbols
+- Tags and categories
+- Publication time
+- Source information
 
-```
-tradingview_get_news_detail(news_id='tag:reuters.com,2026:newsml_xxx', lang='zh-Hans')
-```
-
-Returns: title, description, full content, related symbols, tags, storyPath.
-
-News link format: `https://www.tradingview.com{storyPath}`
-
-### Step 4: Analysis and Summary
+### Step 4: Impact Analysis Framework
 
 Extract from each news item:
 - Event subject (company/industry/policy)
 - Impact scope and duration
 - Beneficiary/affected symbols
-- Investment recommendations
+- Market sentiment indicators
 
 ### Step 5: Generate Briefing
 
@@ -65,7 +59,7 @@ Extract from each news item:
 - Event: [Brief description]
 - Impact: [Market impact analysis]
 - Related symbols: [Stock codes]
-- Source: https://www.tradingview.com{storyPath}
+- Source: [News source]
 
 ## Sector Updates
 | Sector | Main News | Affected Symbols | Trend |
@@ -80,16 +74,18 @@ Extract from each news item:
 
 **User**: "Generate today's China financial news briefing"
 
-**Execution**:
-1. `get_news(market_country='CN', lang='zh-Hans', limit=10)` → News list
-2. For each `get_news_detail(news_id, lang='zh-Hans')` → Full content
-3. Analyze impact, categorize by sector
+**Analysis Framework**:
+1. Review China market news data (stock market focus)
+2. Extract full content and details for each news item
+3. Analyze impact and categorize by sector
 4. Generate structured briefing
 
 **User**: "Compare financial news from China, US, and Japan"
 
-**Execution**:
-1. `get_news` separately for CN/US/JP news
-2. Get details separately
-3. Cross-market comparative analysis
+**Analysis Framework**:
+1. Review news data from CN/US/JP markets separately
+2. Extract details for each market
+3. Perform cross-market comparative analysis
 4. Generate comparison briefing
+
+**Note**: This framework describes the analytical methodology. Users should provide relevant news data for analysis.

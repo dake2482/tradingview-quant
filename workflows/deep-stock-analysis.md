@@ -56,24 +56,30 @@ tradingview_get_ta(symbol, include_indicators=true)
 
 See `references/technical-analysis.md` for detailed scoring methodology.
 
-### Step 5: Get Related News
+### Step 5: Related News Analysis
 
-```
-tradingview_get_news(symbol=symbol, lang="zh-Hans", limit=5)
-```
+**News Data Requirements**:
+- Symbol-specific news (recent 5-10 items)
+- News title, summary, and publication time
+- Related symbols and tags
 
-Get details for important news:
-```
-tradingview_get_news_detail(news_id, lang="zh-Hans")
-```
+**Analysis Focus**:
+- Major company announcements
+- Earnings reports and guidance
+- Industry developments
+- Regulatory changes
 
-### Step 6: Query Upcoming Events
+For important news, analyze full content details for deeper context.
 
-```
-tradingview_get_calendar(type="earnings", from=now, to=now+30days, market="china")
-```
+### Step 6: Upcoming Events Calendar
 
-Check for upcoming earnings, dividends, and other events.
+**Calendar Data Types**:
+- Earnings releases (next 30 days)
+- Dividend distributions
+- Corporate actions
+- Industry events
+
+Check for upcoming events that may impact stock price.
 
 ### Step 7: Generate Comprehensive Report
 

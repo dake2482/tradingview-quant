@@ -48,10 +48,10 @@ Organize search results into readable format, including:
 ### Step 4: Provide Follow-up Action Suggestions
 
 Based on search results, suggest subsequent operations users can perform:
-- View real-time quotes: `tradingview_get_quote`
-- View technical analysis: `tradingview_get_ta`
-- View historical K-lines: `tradingview_get_price`
-- View related news: `tradingview_get_news`
+- View real-time quotes
+- View technical analysis
+- View historical price data
+- View related news
 
 ## Example Conversations
 

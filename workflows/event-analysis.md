@@ -1,81 +1,67 @@
 ---
-description: Event-Driven Analysis Workflow - Track major events and analyze market impact
+description: Event-Driven Analysis Framework - Methodology for analyzing market events and their impact
 ---
 
-# Event-Driven Analysis Workflow
+# Event-Driven Analysis Framework
 
-Track major events, analyze market impact, identify beneficiary stocks, and provide investment recommendations.
+This framework provides methodology for analyzing major events, assessing market impact, identifying beneficiary stocks, and developing investment strategies. Users should provide event and news data for analysis.
 
-## Execution Steps
+## Analysis Steps
 
-### Step 1: Get Financial Calendar
+### Step 1: Financial Calendar Data Structure
 
-Call calendar based on event type (time span not exceeding 40 days):
+When analyzing calendar events, the following data types are relevant (time span typically 7-40 days):
 
-```
-# Earnings calendar
-tradingview_get_calendar(type='earnings', from=now, to=now+14days, market='china')
+**Event Types**:
+- Earnings calendar: Company earnings releases
+- Dividend calendar: Dividend distribution events
+- Economic data calendar: Macroeconomic indicators
+- IPO calendar: New stock listings
 
-# Dividend calendar
-tradingview_get_calendar(type='revenue', from=now, to=now+14days, market='china')
+**Required Data Fields**: date, event_type, company/symbol, market, description
 
-# Economic data calendar
-tradingview_get_calendar(type='economic', from=now, to=now+7days, market='america,china')
+### Step 2: News Data Analysis Framework
 
-# IPO calendar
-tradingview_get_calendar(type='ipo', from=now, to=now+14days, market='china')
-```
+When analyzing financial news, consider these data sources:
 
-### Step 2: Get Related News
+**News Categories**:
+- Market-specific news (by country/region)
+- Symbol-specific news (company announcements)
+- Economic news (policy, macro data)
 
-```
-# Get specific market news
-tradingview_get_news(market='stock', market_country='CN', lang='zh-Hans', limit=20)
-
-# Get specific symbol news
-tradingview_get_news(symbol='SSE:600519', lang='zh-Hans', limit=10)
-
-# Get economic news
-tradingview_get_news(market='economic', lang='zh-Hans', limit=10)
-```
-
-Get details for important news:
-```
-tradingview_get_news_detail(news_id, lang='zh-Hans')
-```
+**Analysis Dimensions**:
+- News headline and summary
+- Publication time and source
+- Related symbols/sectors
+- Sentiment indicators
 
 ### Step 3: Extract Event Keywords
 
-Extract from calendar events and news:
+Extract from calendar events and news data:
 - **Company name/symbol**: Directly related stocks
-- **Industry keywords**: Used to search for same-industry beneficiary stocks
+- **Industry keywords**: Used to identify same-industry beneficiary stocks
 - **Policy keywords**: Used to expand impact scope
 - **Event type**: Earnings beat/policy positive/industry event/breaking news
 
-### Step 4: Search Beneficiary Stocks
+### Step 4: Beneficiary Stock Identification Framework
 
-Search related stocks using extracted keywords:
+**Search Strategy**:
+- Use extracted keywords to identify related stocks
+- For industry events, analyze same-sector stocks via market leaderboards
+- Filter by asset type (stocks), market code, and relevance
 
-```
-tradingview_search_market(query='keyword', filter='stock', limit=20)
-```
+**Data Requirements**:
+- Stock search results with symbols and descriptions
+- Leaderboard data showing gainers/losers by sector
+- Market overview data (price, volume, market cap)
 
-For industry events, also find same-sector stocks via leaderboard:
-```
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='gainers',
-  market_code='china', columnset='overview', count=50
-)
-```
+### Step 5: Technical Confirmation Analysis
 
-### Step 5: Analyze Beneficiary Stock Quotes
+For identified beneficiary stocks (5-10), analyze:
 
-For identified beneficiary stocks (5-10), get quotes and technical analysis:
-
-```
-tradingview_get_quote_batch(symbols=[...])  # Real-time quotes
-tradingview_get_ta(symbol, include_indicators=true)  # Technical confirmation
-```
+**Quote Data**: Real-time or recent price, volume, change percentage
+**Technical Analysis**: RSI, MACD, moving averages, support/resistance levels
+**Recommendation Signals**: Buy/Sell/Neutral based on technical indicators
 
 ### Step 6: Assess Impact Level
 
@@ -135,10 +121,12 @@ Impact levels:
 
 **User**: "Analyze the impact of cloud computing price increases on related companies"
 
-**Execution**:
-1. `get_news(market='stock', market_country='CN', lang='zh-Hans')` → Related news
-2. `get_news_detail(news_id)` → News details
-3. `search_market(query='云计算', filter='stock')` → Related stocks
-4. `get_leaderboard(tab='gainers', market_code='china')` → Verify gainers list
-5. `get_quote_batch` + `get_ta` → Quotes and technical analysis
-6. Assess impact level → Generate analysis report
+**Analysis Framework**:
+1. Review news data about cloud computing price changes
+2. Extract news details and key information
+3. Search for cloud computing related stocks by keyword
+4. Check gainers list to verify market reaction
+5. Analyze quotes and technical indicators for identified stocks
+6. Assess impact level and generate analysis report
+
+**Note**: This framework describes the analytical methodology. Users should provide relevant market data, news content, and stock information for analysis.

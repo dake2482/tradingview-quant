@@ -64,12 +64,14 @@ Judgment logic:
 - **Reversal up**: Short-term positive, long-term negative
 - **Reversal down**: Short-term negative, long-term positive
 
-### Step 5: Confirm with News
+### Step 5: News Confirmation Analysis
 
-```
-tradingview_get_news(market='stock', market_country='CN', lang='zh-Hans', limit=10)
-```
+**News Data Requirements**:
+- Market-level stock news (recent 10-20 items)
+- Sector-related announcements
+- Policy and industry developments
 
+**Analysis Focus**:
 Analyze news for sector associations, confirm if sector strength has fundamental/policy support.
 
 ### Step 6: Sector Leader Technical Verification

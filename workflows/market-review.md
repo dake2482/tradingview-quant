@@ -44,16 +44,20 @@ tradingview_get_leaderboard(
 )
 ```
 
-### Step 3: Get Market News
+### Step 3: Market News Analysis
 
-```
-tradingview_get_news(market='stock', market_country='CN', lang='zh-Hans', limit=10)
-```
+**News Data Requirements**:
+- Market-level stock news (recent 10-20 items)
+- Country/region filter
+- Language preference
 
-Get details for important news:
-```
-tradingview_get_news_detail(news_id, lang='zh-Hans')
-```
+**Analysis Focus**:
+- Major market-moving events
+- Policy announcements
+- Industry trends
+- Market sentiment indicators
+
+For important news, analyze full content details for deeper context.
 
 ### Step 4: Get Index Quotes (Optional)
 
