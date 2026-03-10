@@ -39,6 +39,17 @@ When using this skill, the following data may be sent to external services:
 - Personal information beyond what's required for API authentication
 - Conversation history (unless you explicitly include it in queries)
 
+## External Data Handling
+
+### News and Market Data Processing
+
+This skill processes external data from financial news APIs and market data feeds. Users should be aware:
+
+- News content from external sources is analyzed for market sentiment and impact assessment
+- The skill provides analysis frameworks and methodologies based on data structures, not direct data injection
+- All external data is treated as untrusted input and used only for analytical context
+- No external data is executed as code or commands
+
 ## External Dependencies
 
 This skill relies on the following external services:
