@@ -1,44 +1,25 @@
-# API Tools Usage Guide
+# tvremix MCP Tools Usage Guide
 
-> Metadata-first rules, API combination patterns, best practices for various scenarios
+> Tool combination patterns, best practices for various analysis scenarios using tvremix MCP
 
 ---
 
-## Metadata-First Rules
+## tvremix MCP Overview
 
-Before calling tools that require parameter values, first get available values through `tradingview_get_metadata`. For complete metadata dictionary, see `api-documentation.md` (search for `Market Codes`, `Asset Types and Tabs`).
+This skill uses the tvremix MCP server to access real-time TradingView data. All tools use the following conventions:
 
-### When to Call Metadata
+- **Symbol format**: `EXCHANGE:SYMBOL` (e.g., `NASDAQ:AAPL`, `SSE:688118`, `BINANCE:BTCUSDT`)
+- **Interval format**: `1m`, `5m`, `15m`, `30m`, `1h`, `4h`, `1D`, `1W`, `1M`
 
-| Scenario | Call Method | Parameters Obtained |
-|----------|------------|-------------------|
-| Query stock leaderboard | `get_metadata(type='markets')` | market_code (e.g., america, china) |
-| Query any leaderboard | `get_metadata(type='tabs', asset_type='stocks')` | tab (e.g., gainers, losers) |
-| Need non-overview data | `get_metadata(type='columnsets')` | columnset (e.g., valuation, dividends) |
-| Unsure about exchanges | `get_metadata(type='exchanges')` | 353+ exchange list |
+### Quick Reference: Common Markets
 
-### Common market_code Quick Reference
-
-No need to call metadata every time, here are common values:
-
-- **North America**: america, canada
-- **Europe**: uk, germany, france, switzerland, spain, italy
-- **Asia**: china, hong-kong, japan, korea, india, taiwan, singapore
-- **Others**: australia, brazil
-
-### Common columnset Quick Reference
-
-| columnset | Data Included | Use Cases |
-|-----------|--------------|-----------|
-| overview | Price, change percentage, market cap, volume | Default overview |
-| performance | 1W/1M/3M/6M/1Y/YTD returns | Performance comparison, sector rotation |
-| valuation | PE, PB, PS, EV/EBITDA | Valuation screening |
-| dividends | Dividend yield, payout ratio, ex-dividend date | High dividend strategy |
-| profitability | ROE, ROA, gross margin, net margin | Profitability screening |
-| income_statement | Revenue, net profit, EPS | Financial analysis |
-| balance_sheet | Total assets, debt ratio, current ratio | Financial health |
-| cash_flow | Operating/investing/financing cash flow | Cash flow analysis |
-| technical | RSI, Beta, SMA, ATR | Technical overview |
+| Market | market parameter | Example Exchange Prefix |
+|--------|-----------------|----------------------|
+| US | america | NASDAQ:, NYSE:, AMEX: |
+| China | china | SSE:, SZSE:, BSE: |
+| Hong Kong | hongkong | HKEX: |
+| Japan | japan | TSE: |
+| Korea | korea | KRX: |
 
 ---
 
@@ -47,145 +28,151 @@ No need to call metadata every time, here are common values:
 ### Pattern 1: Deep Individual Stock Analysis
 
 ```
-1. search_market(query="company name") → Get accurate symbol
+1. search_symbols(query="company name") → Get accurate symbol
 2. get_quote(symbol) → Real-time price, change, volume
-3. get_price(symbol, timeframe='D', range=120) → Daily K-line data
-4. get_ta(symbol, include_indicators=true) → Detailed technical indicators
-5. get_news(symbol=symbol, lang='zh-Hans') → Related news
-6. get_calendar(type='earnings', from/to) → Recent earnings dates
+3. get_ohlcv(symbol, interval='1D', count=120) → Daily OHLCV data
+4. get_full_technicals(symbol) → Multi-timeframe technical indicators
+5. get_news(symbol, limit=10) → Related news
+6. get_earnings_calendar(symbols=[symbol]) → Recent earnings dates
 ```
+
+**Advanced variant**: Replace steps 3-4 with `analyze_multi_timeframe(symbol)` for built-in multi-TF analysis.
 
 ### Pattern 2: Smart Stock Screening (Technical + Fundamental)
 
 ```
-1. get_metadata(type='markets') → Confirm market_code
-2. get_metadata(type='tabs', asset_type='stocks') → Confirm tab
-3. get_leaderboard(asset_type='stocks', tab='gainers', market_code, columnset='overview') → Candidate pool
-4. get_leaderboard(same, columnset='valuation') → Valuation data
-5. get_leaderboard(same, columnset='profitability') → Profitability data
-6. For Top candidates: get_ta(symbol, include_indicators=true) → Technical verification
-7. For Top candidates: get_price(symbol, timeframe='D', range=60) → K-line verification
+1. run_screener(market='america', sort_by='change', sort_order='desc', limit=100) → Candidate pool
+2. For Top candidates: get_technicals(symbol, interval='1D') → Technical verification
+3. For Top candidates: get_financials(symbol) → Fundamental data
+4. For Top candidates: get_ohlcv(symbol, interval='1D', count=60) → Chart verification
 ```
+
+**Advanced variant**: Use `rank_symbol_setups(symbols, focus='momentum')` for automated scoring.
 
 ### Pattern 3: Multi-Timeframe Trend Confirmation
 
 ```
-1. get_price(symbol, timeframe='M', range=24) → Monthly trend
-2. get_price(symbol, timeframe='W', range=52) → Weekly trend
-3. get_price(symbol, timeframe='D', range=120) → Daily trend
-4. get_price(symbol, timeframe='60', range=100) → 60-minute details
-5. get_ta(symbol, include_indicators=true) → Multi-period TA signals
+1. get_ohlcv(symbol, interval='1M', count=24) → Monthly trend
+2. get_ohlcv(symbol, interval='1W', count=52) → Weekly trend
+3. get_ohlcv(symbol, interval='1D', count=120) → Daily trend
+4. get_ohlcv(symbol, interval='1h', count=120) → Hourly details
+5. get_full_technicals(symbol) → Multi-period TA signals
 ```
 
-Signal consistency: Monthly/weekly/daily trend direction consistent → High confidence
+**Advanced variant**: Use `analyze_multi_timeframe(symbol, timeframes=['15m','1h','4h','1D','1W'])` for one-call multi-TF alignment.
 
 ### Pattern 4: Sector Rotation Analysis
 
 ```
-1. get_metadata(type='tabs', asset_type='stocks') → Get all tabs
-2. get_leaderboard(tab='best-performing', columnset='performance') → Sector performance
-3. Compare performance columnset data from different tabs
-4. get_news(market='stock', market_country='CN') → News confirm hotspots
+1. analyze_sector_tool(sector_name='Technology', market='america') → Sector ranking
+2. run_screener(market='america', sort_by='change', sort_order='desc', limit=50) → Top performers
+3. get_news(symbol, limit=5) → News for top sector leaders
+4. analyze_multi_timeframe_batch(symbols=[...], timeframes=['1D','1W']) → Batch verification
 ```
 
 ### Pattern 5: Fundamental Screening
 
 ```
-1. get_leaderboard(tab='high-dividend', columnset='dividends') → High dividend
-2. get_leaderboard(tab='all-stocks', columnset='valuation') → Low valuation
-3. get_leaderboard(tab='all-stocks', columnset='profitability') → High ROE
-4. Cross-filter above results → Value stock candidates
+1. run_screener(market='america', filters=[...], limit=100) → Screen by criteria
+2. For candidates: get_financials(symbol) → PE, ROE, revenue, margins
+3. For candidates: get_forecasts(symbol) → Analyst consensus
+4. For candidates: get_dividends_calendar(market='america') → Dividend info
 ```
 
 ### Pattern 6: Market Review
 
 ```
-1. get_leaderboard(tab='gainers', market_code, count=50) → Gainers
-2. get_leaderboard(tab='losers', market_code, count=50) → Losers
-3. get_leaderboard(tab='active', market_code) → Active stocks
-4. get_leaderboard(tab='unusual-volume', market_code) → Unusual volume
-5. get_news(market_country='CN', lang='zh-Hans', limit=10) → News
-6. For each news: get_news_detail(news_id) → Full content
+1. run_screener(market='america', sort_by='change', sort_order='desc', limit=50) → Gainers
+2. run_screener(market='america', sort_by='change', sort_order='asc', limit=50) → Losers
+3. run_screener(market='america', sort_by='volume', sort_order='desc', limit=30) → Active
+4. get_news(symbol, limit=10) → Market news
+5. For important news: get_news_story(story_id) → Full content
+```
+
+### Pattern 7: Multi-Symbol Comparison
+
+```
+1. get_quotes_batch(symbols=[...]) → Batch real-time quotes
+2. compare_symbols_tool(symbols=[...]) → Side-by-side comparison
+3. calculate_correlation_tool(symbols=[...]) → Correlation matrix
+4. analyze_multi_timeframe_batch(symbols=[...]) → Batch multi-TF analysis
+```
+
+### Pattern 8: Risk Assessment
+
+```
+1. get_ohlcv(symbol, interval='1D', count=250) → 1-year daily data
+2. get_quote(symbol) → Current price
+3. get_technicals(symbol, interval='1D') → ATR, Beta, Pivot Points
+4. compute_levels_batch(symbols=[symbol], methods=['swing','smc']) → Support/resistance
 ```
 
 ---
 
-## Key Parameter Description
+## Key Tool Parameters
 
-### get_price Timeframe Selection
+### get_ohlcv Interval Selection
 
-| timeframe | Meaning | Typical range | Use Cases |
-|-----------|---------|--------------|-----------|
-| 1 | 1 minute | 60-240 | Intraday trading |
-| 5 | 5 minutes | 48-120 | Short-term analysis |
-| 15 | 15 minutes | 48-96 | Short-term analysis |
-| 60 | 1 hour | 48-168 | Swing analysis |
-| 240 | 4 hours | 30-90 | Swing analysis |
-| D | Daily | 60-250 | Medium-term analysis |
-| W | Weekly | 52-104 | Medium-long term analysis |
-| M | Monthly | 24-60 | Long-term trend |
+| interval | Meaning | Typical count | Use Cases |
+|----------|---------|--------------|-----------|
+| 1m | 1 minute | 60-240 | Intraday trading |
+| 5m | 5 minutes | 48-120 | Short-term analysis |
+| 15m | 15 minutes | 48-96 | Short-term analysis |
+| 1h | 1 hour | 48-168 | Swing analysis |
+| 4h | 4 hours | 30-90 | Swing analysis |
+| 1D | Daily | 60-250 | Medium-term analysis |
+| 1W | Weekly | 52-104 | Medium-long term |
+| 1M | Monthly | 24-60 | Long-term trend |
 
-### get_price Chart Types
+### get_full_technicals Return Fields
 
-- Default: Standard K-line
-- `type='HeikinAshi'`: Heikin-Ashi, filters noise, clearer trend direction
+Multi-timeframe signals across 15m/1h/4h/1D/1W with:
 
-### get_ta include_indicators Return Fields
-
-Key fields returned when setting `include_indicators=true`:
-
-- **RSI(14)**: Relative Strength Index (>70 overbought, <30 oversold)
-- **MACD**: Trend momentum (DIF, DEA, histogram)
-- **Stoch**: Stochastic Oscillator (K, D values)
+- **RSI(14)**: >70 overbought, <30 oversold
+- **MACD**: DIF/DEA/histogram, golden cross/death cross
+- **Stoch**: K/D values
 - **CCI(20)**: Commodity Channel Index
-- **ADX(14)**: Trend Strength (>25 trending, >50 strong trend)
-- **SMA/EMA**: Simple/Exponential Moving Average
-- **Pivot Points**: Pivot points (support/resistance levels)
+- **ADX(14)**: >25 trending, >50 strong trend
+- **SMA/EMA**: Multiple period moving averages
+- **Bollinger Bands**: Upper/middle/lower
+- **ATR**: Average True Range
 
-### get_news Language Codes
+### Screener Filter Presets
 
-| Market | lang | market_country |
-|---------|------|----------------|
-| China | zh-Hans | CN |
-| United States | en | US |
-| Japan | ja | JP |
-| Hong Kong | zh-Hans or en | HK |
-| South Korea | ko | KR |
+tvremix provides built-in filter presets for common screening:
+- `breakout_with_volume` - Price breakouts with volume confirmation
+- `earnings_runup` - Stocks running up before earnings
+- `new_highs` - Stocks at new highs
+- `oversold_healthy` - Oversold but fundamentally healthy
+- `pullback_with_reversal` - Pullback showing reversal signals
+- `relative_strength` - Relative strength leaders
 
-### get_calendar Timestamps
+### Calendar Tools
 
-Calendar queries require Unix timestamps (seconds), time span not exceeding 40 days:
+- `get_earnings_calendar(symbols, date_from, date_to)` — Earnings releases
+- `get_economic_calendar(countries, date_from, date_to, importance)` — Macro events
+- `get_dividends_calendar(date_from, date_to)` — Dividend payments
 
-```javascript
-// Current time
-const now = Math.floor(Date.now() / 1000);
-// 7 days later
-const weekLater = now + 7 * 24 * 60 * 60;
-// 14 days later
-const twoWeeksLater = now + 14 * 24 * 60 * 60;
-```
+Date format: `YYYY-MM-DD` (ISO format).
 
 ---
 
-## Multi-Asset Type Support
+## tvremix-Specific Advanced Tools
 
-The API supports 8 asset types, each with different tabs and columnsets:
+These tools go beyond basic data access and provide structured analysis:
 
-| Asset Type | asset_type | Tabs Count | Columnsets | Requires market_code |
-|------------|-----------|------------|------------|-------------------|
-| Stocks | stocks | 25 | 9 types (including fundamentals) | Yes |
-| Indices | indices | 11 | 3 types | No |
-| Cryptocurrency | crypto | 20 | 3 types | No |
-| Futures | futures | 7 | 2 types | No |
-| Forex | forex | 10 | 3 types | No |
-| Government Bonds | bonds | 17 | 2 types | No |
-| Corporate Bonds | corporate_bonds | 6 | 1 type | No |
-| ETF/Funds | etfs | 40 | 3 types | No |
-
-### Crypto-Specific Tabs
-
-DeFi, TVL ranking, address count, volume, supply, etc. → Use `get_metadata(type='tabs', asset_type='crypto')` to see complete list.
-
-### ETF-Specific Tabs
-
-By strategy: bitcoin, gold, fixed-income, leveraged, inverse, sector, etc. 40 categories.
+| Tool | What It Does |
+|------|-------------|
+| `analyze_smc_tool` | Smart Money Concepts: BOS/CHoCH, order blocks, FVGs, liquidity |
+| `analyze_swing_tool` | Swing structure: pivots, trendlines, channels, range zones |
+| `analyze_multi_timeframe` | Multi-TF trend alignment with aggregated score |
+| `analyze_multi_timeframe_batch` | Batch multi-TF for watchlist scanning |
+| `compare_symbols_tool` | Side-by-side comparison with rankings |
+| `rank_symbol_setups` | Score and rank symbols by setup quality |
+| `filter_by_indicator` | Filter symbols by indicator relationship (above/below EMA, etc.) |
+| `compute_levels_batch` | Batch compute support/resistance and SMC levels |
+| `calculate_correlation_tool` | Pearson correlation matrix from real OHLCV data |
+| `get_technicals_rating` | Aggregated buy/sell/neutral rating |
+| `get_financials` | Fundamental data (P/E, EPS, market cap, etc.) |
+| `get_forecasts` | Analyst price targets and ratings distribution |
+| `web_search` | General web search for news and research |

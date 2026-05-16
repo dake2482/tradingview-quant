@@ -16,43 +16,47 @@ Extract from user input:
 - **Fundamental conditions**: PE, PB, ROE, market cap, dividend yield, etc.
 - **Sorting preference**: Change percentage, market cap, volume, etc.
 
-### Step 2: Get Metadata (Metadata First)
+### Step 2: Select Market and Screener Preset
+
+tvremix uses market names directly (e.g., 'america', 'china') and built-in screener presets — no separate metadata call needed.
 
 ```
-tradingview_get_metadata(type='markets')  # Get market_code
-tradingview_get_metadata(type='tabs', asset_type='stocks')  # Get available tabs
+# tvremix uses market names directly — no metadata call required
+# Available markets: america, china, hongkong, japan, etc.
+# Use run_screener with filter_preset or custom filters
 ```
 
 ### Step 3: Get Candidate Pool
 
-Choose appropriate tab and columnset based on screening direction:
+Use run_screener or analyze_sector_tool based on screening direction:
 
 ```
-# Technical screening - Use technical-related tabs
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='gainers',  # or active/unusual-volume/best-performing
-  market_code='china', columnset='overview', count=100
+# Technical screening - sort by performance
+run_screener(
+  market='china', sort_by='change', sort_order='desc', limit=100
 )
 
-# Fundamental data - Switch columnset
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='all-stocks',
-  market_code='china', columnset='valuation', count=100
+# Fundamental data - use filter_preset or custom filters
+run_screener(
+  market='china', filter_preset='value', sort_by='market_cap', limit=100
 )
 
-# Profitability
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='all-stocks',
-  market_code='china', columnset='profitability', count=100
+# Sector-based screening
+analyze_sector_tool(
+  sector_name='Technology', market='china', metric='market_cap', limit=100
 )
 ```
+
+**tvremix-specific tools for smarter screening**:
+- `rank_symbol_setups(symbols, focus='momentum')` — rank a symbol list by tradable setups
+- `filter_by_indicator(symbols, indicator='rsi', comparator='within_pct')` — filter by indicator levels
 
 ### Step 4: Technical Screening
 
 For Top 20-30 in candidate pool, call individually:
 
 ```
-tradingview_get_ta(symbol, include_indicators=true)
+get_technicals(symbol, interval='1D')
 ```
 
 Screening criteria (see `references/technical-analysis.md` scoring model):
@@ -66,7 +70,7 @@ Screening criteria (see `references/technical-analysis.md` scoring model):
 For Top 10 that pass technical screening, get K-line confirmation:
 
 ```
-tradingview_get_price(symbol, timeframe='D', range=60)
+get_ohlcv(symbol, interval='1D', count=60)
 ```
 
 Verify:
@@ -107,9 +111,9 @@ Calculate total score (100-point system) according to `references/technical-anal
 **User**: "Help me select strong stocks from China A-shares"
 
 **Execution**:
-1. `get_metadata(type='markets')` → china
-2. `get_leaderboard(tab='gainers', market_code='china', count=100)` → Gainers
-3. `get_leaderboard(tab='gainers', market_code='china', columnset='valuation')` → Valuation
-4. Top 20 individual `get_ta(include_indicators=true)` → Technical screening
-5. Top 10 `get_price(timeframe='D', range=60)` → K-line verification
+1. Use market='china' directly (no metadata call needed)
+2. `run_screener(market='china', sort_by='change', sort_order='desc', limit=100)` → Top gainers
+3. `run_screener(market='china', filter_preset='value', limit=100)` → Valuation data
+4. Top 20 individual `get_technicals(symbol, interval='1D')` → Technical screening
+5. Top 10 `get_ohlcv(symbol, interval='1D', count=60)` → K-line verification
 6. Comprehensive scoring → Output Top 10 report

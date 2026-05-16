@@ -1,64 +1,56 @@
 # Security Policy
 
-## API Key Management
+## tvremix MCP Connection
 
-This skill requires API keys to access TradingView data through RapidAPI. Please follow these security best practices:
+This skill uses the tvremix MCP server to access TradingView data. The security model is simpler than traditional API-based approaches.
 
-### ⚠️ Critical Security Rules
+### Security Model
 
-1. **Never commit API keys to version control**
-   - Do not include real API keys in configuration files that are tracked by git
-   - Use environment variables or secure configuration management tools
-   - Add configuration files with keys to `.gitignore`
-
-2. **Keep your API keys private**
-   - Do not share your API keys in public forums, chat rooms, or documentation
-   - Do not include API keys in screenshots or screen recordings
-   - Treat API keys like passwords
-
-3. **Rotate keys regularly**
-   - If you suspect your API key has been compromised, regenerate it immediately
-   - Consider rotating keys periodically as a security best practice
-
-4. **Use minimal permissions**
-   - Only use API keys with the minimum required permissions
-   - Monitor your API usage for unexpected activity
+1. **No API Keys Required**: tvremix connects to TradingView data without requiring users to manage API keys
+2. **MCP Protocol**: Communication happens through the Model Context Protocol (MCP), a standardized protocol for AI-tool interaction
+3. **Local Processing**: Analysis and computations run locally in your AI assistant
 
 ## Data Privacy
 
-### What data is sent to external APIs
+### What data is sent to tvremix
 
-When using this skill, the following data may be sent to external services:
-
-- **TradingView API**: Stock symbols, market queries, and analysis requests
-- **RapidAPI**: Authentication headers and API requests
+- **Symbol queries**: Stock/crypto/forex symbols you ask about
+- **Search queries**: Keywords used for symbol search
+- **Screener filters**: Market screening criteria
 
 ### What data is NOT sent
 
-- Your local files and code (unless explicitly referenced in queries)
-- Personal information beyond what's required for API authentication
-- Conversation history (unless you explicitly include it in queries)
+- Your local files and code
+- Personal information beyond symbol queries
+- Conversation history (only the current query parameters)
 
 ## External Data Handling
 
 ### News and Market Data Processing
 
-This skill processes external data from financial news APIs and market data feeds. Users should be aware:
+This skill processes external data from financial news and market data feeds through tvremix:
 
-- News content from external sources is analyzed for market sentiment and impact assessment
-- The skill provides analysis frameworks and methodologies based on data structures, not direct data injection
+- News content from TradingView is analyzed for market sentiment and impact assessment
 - All external data is treated as untrusted input and used only for analytical context
 - No external data is executed as code or commands
 
-## External Dependencies
+## Security Best Practices for Users
 
-This skill relies on the following external services:
+### tvremix Configuration
 
-- **RapidAPI** (https://rapidapi.com) - API gateway and authentication
+When configuring tvremix MCP in your AI assistant:
 
-These services have their own security policies and terms of service. Please review:
-- [RapidAPI Terms of Service](https://rapidapi.com/terms/)
-- [RapidAPI Privacy Policy](https://rapidapi.com/privacy/)
+1. **Use official sources**: Install tvremix only from the official source (https://tvremix.xyz)
+2. **Review permissions**: Understand what data tvremix can access
+3. **Keep updated**: Use the latest version of tvremix for security patches
+
+### TradingView Account Connection (Optional)
+
+If you connect your TradingView account through the tvremix Chrome extension:
+
+- Your watchlists, alerts, and charts are read server-side
+- Connection is managed by the Chrome extension, not by this skill
+- Disconnect anytime by removing the extension or revoking access
 
 ## Reporting Security Issues
 
@@ -69,48 +61,9 @@ If you discover a security vulnerability in this skill, please report it by:
 3. Provide detailed information about the vulnerability
 4. Allow reasonable time for the issue to be addressed before public disclosure
 
-## Security Best Practices for Users
-
-### Configuration File Security
-
-When integrating with OpenClaw, ensure your configuration files are secure:
-
-```bash
-# Set appropriate file permissions (Unix/Linux/macOS)
-chmod 600 ~/.openclaw/config.json
-```
-
-### Using Environment Variables (Recommended)
-
-For enhanced security, use environment variables instead of hardcoded keys:
-
-```bash
-# Set API key as environment variable
-export RAPIDAPI_KEY="your-actual-key-here"
-```
-
-Then reference it in your OpenClaw tool configuration or API calls.
-
-### Monitoring API Usage
-
-Regularly check your RapidAPI dashboard to:
-- Monitor API call volume
-- Detect unusual activity
-- Stay within rate limits
-- Review billing (if applicable)
-
-## Rate Limiting and Abuse Prevention
-
-- The free tier has rate limits to prevent abuse
-- Excessive requests may result in temporary blocks
-- Use caching when possible to reduce API calls
-- Implement exponential backoff for retries
-
 ## Disclaimer
 
 This skill is provided "as is" without warranty of any kind. Users are responsible for:
-- Securing their own API keys
-- Complying with terms of service of external APIs
 - Understanding the risks of using third-party services
 - Any investment decisions made using this tool
 

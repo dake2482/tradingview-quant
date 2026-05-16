@@ -16,28 +16,29 @@ Extract list of symbols to analyze from user input:
 
 ### Step 2: Batch Get Real-time Quotes
 
-Call `tradingview_get_quote_batch` to get real-time quotes for all symbols:
+Call `get_quotes_batch` to get real-time quotes for all symbols (up to 50 per call):
 
 ```
 Parameter description:
-- symbols: Array of symbols (1-10)
-- session: Trading session (default: regular)
-- fields: Return fields (default: all)
+- symbols: Array of symbols in EXCHANGE:SYMBOL format (1-50)
 ```
 
 ### Step 3: Batch Get Historical Charts
 
-Call `tradingview_get_price_batch` to get historical data for all symbols:
+Make multiple parallel `get_ohlcv()` calls to get historical data for all symbols:
 
 ```
-Parameter description:
-- requests: Request array (each contains symbol, timeframe, range)
-- Maximum 10 requests
+# Call get_ohlcv in parallel for each symbol
+get_ohlcv(symbol, interval='1D', count=300)  # per symbol
 ```
 
-### Step 4: Get Technical Analysis Individually
+### Step 4: Get Technical Analysis
 
-For each symbol, call `tradingview_get_ta` to get technical analysis signals:
+For each symbol, call `get_technicals(symbol, interval='1D')` to get technical analysis signals.
+Alternatively, use `analyze_multi_timeframe_batch(symbols, timeframes=['1D'])` for batch technical analysis across multiple symbols at once.
+
+**tvremix-specific alternative**: Use `compare_symbols_tool(symbols)` for a built-in side-by-side comparison with rankings per metric.
+
 - Aggregate buy/sell/neutral signals
 - Calculate comprehensive technical score
 
@@ -63,9 +64,9 @@ Output comprehensive comparison report:
 **User**: "Compare and analyze AAPL, MSFT, GOOGL stocks"
 
 **Execution**:
-1. Call `tradingview_get_quote_batch` to get real-time quotes
-2. Call `tradingview_get_price_batch` to get daily chart data
-3. Call `tradingview_get_ta` individually to get technical analysis
+1. Call `get_quotes_batch(symbols)` to get real-time quotes
+2. Call multiple parallel `get_ohlcv(symbol, interval='1D')` to get daily chart data
+3. Call `get_technicals(symbol)` individually (or `analyze_multi_timeframe_batch(symbols)`) to get technical analysis
 4. Generate comparison table, highlighting best performers for each metric
 
 ---
@@ -83,7 +84,7 @@ Output comprehensive comparison report:
 **User**: "Compare BTC and ETH technicals"
 
 **Execution**:
-1. Call `tradingview_get_quote_batch`, symbols=["BINANCE:BTCUSDT", "BINANCE:ETHUSDT"]
-2. Call `tradingview_get_price_batch` to get historical charts
-3. Get technical analysis signals individually
+1. Call `get_quotes_batch(symbols=["BINANCE:BTCUSDT", "BINANCE:ETHUSDT"])`
+2. Call parallel `get_ohlcv(symbol)` to get historical charts
+3. Get technical analysis signals individually (or use `compare_symbols_tool`)
 4. Compare trend strength and overbought/oversold conditions

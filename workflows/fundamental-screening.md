@@ -4,7 +4,7 @@ description: Fundamental Screening Workflow - Use multiple columnsets to screen 
 
 # Fundamental Screening Workflow
 
-Use `tradingview_get_leaderboard` with various columnsets (valuation/profitability/dividends/balance_sheet/income_statement/cash_flow) to screen quality stocks from a fundamental perspective.
+Use `run_screener` with various filter and sort parameters, combined with `get_financials` and `get_forecasts` for individual stock analysis, to screen quality stocks from a fundamental perspective.
 
 ## Execution Steps
 
@@ -19,11 +19,20 @@ Determine screening strategy based on user needs:
 | Growth Stocks | profitability + income_statement | High ROE, revenue growth |
 | Financial Health | balance_sheet + cash_flow | Low debt ratio, ample cash flow |
 
-### Step 2: Get Metadata
+### Step 2: Understand tvremix Market and Screening Parameters
+
+> **Note**: tvremix does not have a standalone metadata endpoint. Market names are used directly (e.g. 'america', 'china', 'japan'). The `run_screener` tool uses filter/sort parameters instead of columnset/tab parameters.
 
 ```
-tradingview_get_metadata(type='markets')        # Get market_code
-tradingview_get_metadata(type='columnsets')      # Confirm available columnsets
+# Market names used directly in run_screener:
+# 'america', 'china', 'japan', 'korea', 'india', 'uk', 'germany', 'france', etc.
+
+# Use run_screener with filter params for screening
+run_screener(market, filters, sort_by, sort_order, limit)
+
+# For individual stock fundamentals:
+get_financials(symbol)    # P/E, EPS, market cap, revenue growth, sector, etc.
+get_forecasts(symbol)     # Analyst price targets, ratings distribution, EPS estimates
 ```
 
 ### Step 3: Get Leaderboard Data (Multiple Columnsets)
@@ -31,22 +40,24 @@ tradingview_get_metadata(type='columnsets')      # Confirm available columnsets
 Call based on strategy combination, using value investing as example:
 
 ```
-# Get valuation data
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='all-stocks',
-  market_code='china', columnset='valuation', count=100
+# Screen for valuation (sort by PE or PB)
+run_screener(
+  market='china', sort_by='price_earnings',
+  sort_order='asc', limit=100
 )
 
-# Get profitability data
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='all-stocks',
-  market_code='china', columnset='profitability', count=100
+# Screen for profitability (sort by ROE or revenue growth)
+run_screener(
+  market='china', sort_by='roe',
+  sort_order='desc', limit=100
 )
 
-# Get dividend data
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='high-dividend',
-  market_code='china', columnset='dividends', count=50
+# Screen for high dividend stocks
+get_dividends_calendar(market='china', limit=50)
+# Or use run_screener with dividend-related sort
+run_screener(
+  market='china', sort_by='dividend_yield',
+  sort_order='desc', limit=50
 )
 ```
 
@@ -71,7 +82,7 @@ Cross-filter results from multiple columnsets:
 For top candidates (5-10), call individually:
 
 ```
-tradingview_get_ta(symbol, include_indicators=true)
+get_technicals(symbol, interval='1D')
 ```
 
 Filter out stocks with obviously weak technicals (e.g., RSI > 80 overbought, MACD death cross).
@@ -102,21 +113,21 @@ Filter out stocks with obviously weak technicals (e.g., RSI > 80 overbought, MAC
 
 ### High Dividend Strategy
 ```
-tab='high-dividend' + columnset='dividends' → Dividend yield ranking
-Cross with columnset='profitability' → Confirm sustainable earnings
-Cross with columnset='balance_sheet' → Confirm financial health
+get_dividends_calendar(market='china') → Dividend yield ranking
+Cross with run_screener(market='china', sort_by='roe', sort_order='desc') → Confirm sustainable earnings
+Cross with get_financials(symbol) for each candidate → Confirm financial health
 ```
 
 ### Low Valuation Strategy
 ```
-tab='all-stocks' + columnset='valuation' → PE/PB ranking
-Cross with columnset='income_statement' → Confirm revenue and profit
-Cross with columnset='cash_flow' → Confirm cash flow
+run_screener(market='china', sort_by='price_earnings', sort_order='asc') → PE/PB ranking
+Cross with get_financials(symbol) for each candidate → Confirm revenue and profit
+Cross with get_forecasts(symbol) for each candidate → Confirm analyst expectations
 ```
 
 ### Blue Chip Strategy
 ```
-tab='large-cap' + columnset='profitability' → Large-cap high ROE
-Cross with columnset='performance' → Confirm performance trend
-Cross with columnset='dividends' → Dividend protection
+run_screener(market='china', sort_by='market_cap', sort_order='desc', limit=50) → Large-cap stocks
+Filter with get_financials(symbol) → High ROE confirmation
+Cross with get_dividends_calendar(market='china') → Dividend protection
 ```

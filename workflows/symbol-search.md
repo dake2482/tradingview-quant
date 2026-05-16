@@ -17,22 +17,14 @@ Extract search keywords and filter conditions from user input:
 
 ### Step 2: Call Search Tool
 
-Call `tradingview_search_market` for instrument search:
+Call `search_symbols` for instrument search:
 
 ```
 Parameter description:
 - query: Search keywords (required)
-- filter: Asset type filter (optional)
-  - stock: Stocks
-  - crypto: Cryptocurrency
-  - forex: Forex
-  - futures: Futures
-  - index: Indices
-  - funds: Funds
-  - bond: Bonds
-  - options: Options
-- lang: Language code (default en)
-- limit: Number of results (default 20, max 100)
+- limit: Number of results (default 10, max 50)
+- exclude_types: Optional list of result types to exclude
+  (e.g. ['index', 'fundamental', 'economic', 'spread'])
 ```
 
 ### Step 3: Format Search Results
@@ -58,7 +50,7 @@ Based on search results, suggest subsequent operations users can perform:
 **User**: "Help me search for Apple company's stock"
 
 **Execution**:
-1. Call `tradingview_search_market`, query="AAPL", filter="stock"
+1. Call `search_symbols`, query="AAPL"
 2. Return results including NASDAQ:AAPL and other matches
 3. Suggest user can view real-time quotes or technical analysis
 
@@ -67,6 +59,6 @@ Based on search results, suggest subsequent operations users can perform:
 **User**: "Search for Bitcoin-related trading pairs"
 
 **Execution**:
-1. Call `tradingview_search_market`, query="BTC", filter="crypto"
+1. Call `search_symbols`, query="BTC", exclude_types=["stock", "index", "fundamental", "economic", "spread"]
 2. Return BINANCE:BTCUSDT, COINBASE:BTCUSD and other trading pairs
 3. Suggest user select specific trading pair for in-depth analysis

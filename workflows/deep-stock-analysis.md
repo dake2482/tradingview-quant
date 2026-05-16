@@ -13,7 +13,7 @@ Combine multiple API data sources to perform comprehensive analysis on individua
 If user input is Chinese name/abbreviation, search to confirm accurate symbol:
 
 ```
-tradingview_search_market(query="user input", filter="stock", lang="zh")
+search_symbols(query="user input")
 ```
 
 Confirm symbol format is `EXCHANGE:SYMBOL` (e.g., `SSE:688118`, `NASDAQ:AAPL`).
@@ -21,7 +21,7 @@ Confirm symbol format is `EXCHANGE:SYMBOL` (e.g., `SSE:688118`, `NASDAQ:AAPL`).
 ### Step 2: Get Real-time Quote
 
 ```
-tradingview_get_quote(symbol, session="regular")
+get_quote(symbol)
 ```
 
 Extract key data:
@@ -34,17 +34,17 @@ Extract key data:
 Call in parallel to get data for different periods:
 
 ```
-tradingview_get_price(symbol, timeframe='D', range=120)   # Daily - medium-term trend
-tradingview_get_price(symbol, timeframe='W', range=52)    # Weekly - medium to long-term
-tradingview_get_price(symbol, timeframe='60', range=100)  # 60-minute - short-term details
+get_ohlcv(symbol, interval='1D', count=120)   # Daily - medium-term trend
+get_ohlcv(symbol, interval='1W', count=52)    # Weekly - medium to long-term
+get_ohlcv(symbol, interval='1h', count=100)   # Hourly - short-term details
 ```
 
-Optional: `type='HeikinAshi'` to get Heikin Ashi candles for clearer trend visualization.
+Optional: tvremix has no Heikin Ashi mode; use standard OHLCV data and compute Heikin Ashi values client-side if needed.
 
 ### Step 4: Get Detailed Technical Analysis
 
 ```
-tradingview_get_ta(symbol, include_indicators=true)
+get_full_technicals(symbol)
 ```
 
 **Key Indicator Interpretation**:
@@ -124,9 +124,9 @@ Output structure:
 **User**: "Help me analyze Primeton"
 
 **Execution**:
-1. `search_market(query="普元信息", filter="stock")` → SSE:688118
+1. `search_symbols(query="普元信息")` → SSE:688118
 2. `get_quote(symbol="SSE:688118")` → Real-time quote
-3. `get_price` × 3 timeframes → Chart data
-4. `get_ta(include_indicators=true)` → Detailed technical indicators
-5. `get_news(symbol="SSE:688118", lang="zh-Hans")` → Related news
+3. `get_ohlcv` x 3 timeframes (1D/1W/1h) → Chart data
+4. `get_full_technicals(symbol)` → Detailed technical indicators
+5. `get_news(symbol="SSE:688118")` → Related news
 6. Comprehensive scoring, generate report

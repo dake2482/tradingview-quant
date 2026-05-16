@@ -8,11 +8,9 @@ Daily market review, tracking hot sectors and capital flows, discovering investm
 
 ## Execution Steps
 
-### Step 1: Get Metadata
+### Step 1: Select Market
 
-```
-tradingview_get_metadata(type='markets')  # Confirm market_code
-```
+tvremix uses market names directly (e.g., 'china', 'america') — no separate metadata call needed.
 
 ### Step 2: Get Gainers/Losers Data
 
@@ -20,27 +18,23 @@ Call in parallel to get multi-dimensional data:
 
 ```
 # Gainers
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='gainers',
-  market_code='china', columnset='overview', count=50
+run_screener(
+  market='china', sort_by='change', sort_order='desc', limit=50
 )
 
 # Losers
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='losers',
-  market_code='china', columnset='overview', count=50
+run_screener(
+  market='china', sort_by='change', sort_order='asc', limit=50
 )
 
 # Most active (highest volume)
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='active',
-  market_code='china', columnset='overview', count=30
+run_screener(
+  market='china', sort_by='volume', sort_order='desc', limit=30
 )
 
 # Unusual volume
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='unusual-volume',
-  market_code='china', columnset='overview', count=30
+run_screener(
+  market='china', filter_preset='unusual_volume', limit=30
 )
 ```
 
@@ -57,12 +51,12 @@ tradingview_get_leaderboard(
 - Industry trends
 - Market sentiment indicators
 
-For important news, analyze full content details for deeper context.
+For important news, analyze full content details for deeper context. Use `get_news(symbol, limit)` for symbol-specific news.
 
 ### Step 4: Get Index Quotes (Optional)
 
 ```
-tradingview_get_quote_batch(
+get_quotes_batch(
   symbols=["SSE:000001", "SZSE:399001", "SZSE:399006"]  # Shanghai/Shenzhen/ChiNext
 )
 ```
@@ -129,9 +123,9 @@ Correlate companies/industries in news with gainers/losers:
 **User**: "How was the A-share market today?"
 
 **Execution**:
-1. `get_metadata(type='markets')` → china
-2. `get_leaderboard` × 4 (gainers/losers/active/unusual-volume)
-3. `get_news(market_country='CN', lang='zh-Hans')` + details
-4. `get_quote_batch` → Index quotes
+1. Use market='china' directly (no metadata call needed)
+2. `run_screener` x 4 (gainers/losers/active/unusual-volume variants)
+3. `get_news(symbol, limit)` for key symbols + details
+4. `get_quotes_batch` → Index quotes
 5. Sector categorization → Hot sector identification → News correlation
 6. Generate review report

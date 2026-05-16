@@ -15,20 +15,24 @@ Pattern recognition algorithms and success rate statistics can be found in `refe
 Get sufficiently long daily data for pattern recognition:
 
 ```
-tradingview_get_price(symbol, timeframe='D', range=120)
+get_ohlcv(symbol, interval='1D', count=120)
 ```
 
 For short-term patterns (candlestick combinations), additionally get hourly data:
 ```
-tradingview_get_price(symbol, timeframe='60', range=100)
+get_ohlcv(symbol, interval='1h', count=100)
 ```
 
-Optional: `type='HeikinAshi'` to get Heikin Ashi candles for clearer trend structure visualization.
+Optional: tvremix has no Heikin Ashi mode; use standard OHLCV data and compute Heikin Ashi values client-side if needed.
+
+**tvremix-specific tools for pattern analysis**:
+- `analyze_swing_tool(symbol, interval='1D')` — detect swing structure, pivots, trendlines, channels, range zones
+- `compute_levels_batch(symbols, methods=['swing', 'smc'])` — batch support/resistance, order blocks, FVGs, liquidity levels
 
 ### Step 2: Get Technical Indicators
 
 ```
-tradingview_get_ta(symbol, include_indicators=true)
+get_technicals(symbol, interval='1D')
 ```
 
 Key indicators for pattern confirmation:
@@ -110,8 +114,8 @@ Only recommend trades when risk-reward ratio > 1.5.
 **User**: "Analyze BTC/USDT technical patterns"
 
 **Execution**:
-1. `get_price(symbol='BINANCE:BTCUSDT', timeframe='D', range=120)` → Daily candles
-2. `get_ta(symbol='BINANCE:BTCUSDT', include_indicators=true)` → Technical indicators
+1. `get_ohlcv(symbol='BINANCE:BTCUSDT', interval='1D', count=120)` → Daily candles
+2. `get_technicals(symbol='BINANCE:BTCUSDT', interval='1D')` → Technical indicators
 3. Analyze candlestick data to identify patterns (refer to `references/pattern-library.md`)
 4. Calculate confidence and key price levels
 5. Generate trading strategy report

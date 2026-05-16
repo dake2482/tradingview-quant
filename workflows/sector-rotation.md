@@ -4,42 +4,44 @@ description: Sector rotation analysis workflow - Identify strong sectors and rot
 
 # Sector Rotation Analysis Workflow
 
-Through `tradingview_get_leaderboard`'s performance columnset and various tabs, identify current strong sectors, analyze rotation trends, and discover investment opportunities.
+Through `run_screener` with performance-based sorting and `analyze_sector_tool` for sector-level analysis, identify current strong sectors, analyze rotation trends, and discover investment opportunities.
 
 ## Execution Steps
 
-### Step 1: Get Metadata
+### Step 1: Confirm Market and Parameters
+
+> **Note**: tvremix uses market names directly (e.g. 'america', 'china', 'japan') and filter/sort parameters instead of metadata endpoints. No separate metadata call is needed.
 
 ```
-tradingview_get_metadata(type='markets')   # Confirm market_code
-tradingview_get_metadata(type='tabs', asset_type='stocks')  # View all category tabs
+# Market names used directly: 'america', 'china', 'japan', 'korea', etc.
+# Use run_screener with sort_by and sort_order to replicate tab-based queries
 ```
 
-### Step 2: Get Sector Performance Rankings (performance columnset)
+### Step 2: Get Sector Performance Rankings
 
 ```
 # Gainers - performance data (1W/1M/3M/6M/1Y returns)
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='best-performing',
-  market_code='china', columnset='performance', count=50
+run_screener(
+  market='china', sort_by='change',
+  sort_order='desc', limit=50
 )
 
 # Losers
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='losers',
-  market_code='china', columnset='performance', count=50
+run_screener(
+  market='china', sort_by='change',
+  sort_order='asc', limit=50
 )
 
-# Active stocks
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='active',
-  market_code='china', columnset='overview', count=50
+# Active stocks (most active by volume)
+run_screener(
+  market='china', sort_by='volume',
+  sort_order='desc', limit=50
 )
 
 # Unusual volume
-tradingview_get_leaderboard(
-  asset_type='stocks', tab='unusual-volume',
-  market_code='china', columnset='overview', count=50
+run_screener(
+  market='china', filter_preset='breakout_with_volume',
+  limit=50
 )
 ```
 
@@ -79,7 +81,7 @@ Analyze news for sector associations, confirm if sector strength has fundamental
 For 1-2 leader stocks of each strong sector:
 
 ```
-tradingview_get_ta(symbol, include_indicators=true)
+get_technicals(symbol, interval='1D')
 ```
 
 Confirm if sector leader technicals support continued sector trend.
@@ -114,9 +116,15 @@ Can also use index and ETF data for sector analysis:
 
 ```
 # Industry index comparison
-tradingview_get_leaderboard(asset_type='indices', tab='all', columnset='performance')
+run_screener(market='america', symbol_types=['index'], sort_by='change', sort_order='desc')
 
 # ETF sector comparison
-tradingview_get_leaderboard(asset_type='etfs', tab='sector-etfs', columnset='performance')
-tradingview_get_leaderboard(asset_type='etfs', tab='highest-returns', columnset='performance')
+analyze_sector_tool(sector_name='Technology', market='america', metric='perf')
+analyze_sector_tool(sector_name='Healthcare', market='america', metric='perf')
+
+# Batch multi-timeframe analysis for sector ETFs
+analyze_multi_timeframe_batch(
+  symbols=["NASDAQ:XLK", "NYSE:XLV", "NYSE:XLF", "NYSE:XLE"],
+  timeframes=["1D", "1W"]
+)
 ```

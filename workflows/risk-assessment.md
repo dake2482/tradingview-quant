@@ -13,13 +13,13 @@ Professional position management and risk control recommendation system. For det
 Get sufficiently long daily data for volatility calculation:
 
 ```python
-tradingview_get_price(symbol, timeframe='D', range=250)  # Approximately 1 year daily data
+get_ohlcv(symbol, interval='1D', count=250)  # Approximately 1 year daily data
 ```
 
 ### Step 2: Get Real-time Quotes
 
 ```python
-tradingview_get_quote(symbol, session='regular')
+get_quote(symbol)
 ```
 
 Extract: Current price, 52-week high/low, volume, bid/ask.
@@ -27,7 +27,7 @@ Extract: Current price, 52-week high/low, volume, bid/ask.
 ### Step 3: Get Technical Indicators
 
 ```python
-tradingview_get_ta(symbol, include_indicators=true)
+get_technicals(symbol, interval='1D')
 ```
 
 Key indicators for stop loss calculation:
@@ -120,10 +120,10 @@ Example: Target daily volatility 2%, instrument daily volatility 4% → Max posi
 **User**: "I have 100k capital, want to buy Puyuan Information, how much should I buy?"
 
 **Execution**:
-1. `search_market(query='普元信息')` → SSE:688118
-2. `get_price(symbol='SSE:688118', timeframe='D', range=250)` → Daily K-lines
+1. `search_symbols(query='普元信息')` → SSE:688118
+2. `get_ohlcv(symbol='SSE:688118', interval='1D', count=250)` → Daily K-lines
 3. `get_quote(symbol='SSE:688118')` → Real-time price
-4. `get_ta(symbol='SSE:688118', include_indicators=true)` → Technical indicators
+4. `get_technicals(symbol='SSE:688118', interval='1D')` → Technical indicators
 5. Calculate volatility → Kelly formula → Position recommendations
 6. Calculate stop loss/take profit levels → Risk-reward ratio
 7. Generate complete risk management plan, stop loss/take profit strategy, risk-reward ratio plan.
